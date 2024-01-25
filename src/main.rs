@@ -17,16 +17,28 @@ async fn main() {
 }
 
 fn page_template(title: String, body: String) -> String {
+    let global_css = include_str!("./pico.min.css");
+    let htmx = include_str!("./htmx.min.js");
     format!(
         r#"
+        <!doctype html>
         <html>
           <head>
-            <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+              {global_css}
+            </style>
+            <script>
+              {htmx}
+            </script>
             <title>{title}</title>
           </head>
-          <body hx-boost="true">
-            {body}
-          </body>
+          <main class="container">
+            <body hx-boost="true">
+              {body}
+            </body>
+          </main>
         </html>
         "#,
     )
